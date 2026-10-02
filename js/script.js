@@ -1,27 +1,46 @@
-// Welcome message
-window.onload = function () {
-    alert("Welcome to the ASUS Demo Website!");
-};
+// script.js
 
-// Product buttons
-const buttons = document.querySelectorAll(".product-card button");
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Website loaded successfully!");
 
-buttons.forEach(button => {
-    button.addEventListener("click", function () {
-        const product = this.parentElement.querySelector("h3").textContent;
-        alert("You selected: " + product);
+  // Highlight the active nav link
+  const currentPage = window.location.pathname.split("/").pop();
+  const navLinks = document.querySelectorAll("nav a");
+
+  navLinks.forEach(link => {
+    if (link.getAttribute("href") === currentPage) {
+      link.classList.add("active-link");
+    }
+
+    // Log navigation clicks
+    link.addEventListener("click", () => {
+      console.log(`Navigating to ${link.textContent} page`);
     });
-});
+  });
 
-// Contact form
-const form = document.querySelector("form");
+  // Add alerts to "Learn More" buttons in Services
+  const buttons = document.querySelectorAll("button");
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      alert("More details coming soon!");
+    });
+  });
 
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
+  // Contact form validation
+  const contactForm = document.querySelector("form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", (e) => {
+      e.preventDefault(); // prevent page reload
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
 
-    const name = document.getElementById("name").value;
-
-    alert("Thank you, " + name + "! Your message has been sent.");
-
-    form.reset();
+      if (name && email && message) {
+        alert("Thank you for contacting us, " + name + "! We'll reply soon.");
+        contactForm.reset();
+      } else {
+        alert("Please fill out all fields before submitting.");
+      }
+    });
+  }
 });
